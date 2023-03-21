@@ -2,9 +2,15 @@ import axios from "axios";
 //const baseUrl = 'https://jsonplaceholder.typicode.com/posts'
 const baseUrl = 'http://localhost:3001/api/notes'
 
-export const create = ({title, content, userId}) => {
+export const create = ({content, important}, {token}) => {
+    const config = {
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+    }
+
     return axios
-     .post(baseUrl, { content, userId})
+     .post(baseUrl, { content, important}, config)
      .then(response => {
         const { data } = response;
         return data;
