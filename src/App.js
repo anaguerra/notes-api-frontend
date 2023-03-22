@@ -36,9 +36,7 @@ const App = (props) => {
       important: Math.random() > 0.5
     }
 
-    const {token} = user
-    
-    noteService.create(noteObject, {token})
+    noteService.create(noteObject)
       .then(newNote => {
         setNotes((prevNotes) => prevNotes.concat(newNote));
       }).catch(error => {
@@ -53,6 +51,7 @@ const App = (props) => {
     // el problema de los await es que necesitan try/catch
     try {
       const user = await login({ username, password})
+      noteService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')

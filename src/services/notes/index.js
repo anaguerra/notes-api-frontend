@@ -2,10 +2,16 @@ import axios from "axios";
 //const baseUrl = 'https://jsonplaceholder.typicode.com/posts'
 const baseUrl = 'http://localhost:3001/api/notes'
 
+let token = null
+
+export const setToken = newToken => {
+    token = `Bearer ${newToken}`
+}
+
 export const create = ({content, important}, {token}) => {
     const config = {
       headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: token
       }
     }
 
