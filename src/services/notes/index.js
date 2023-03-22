@@ -8,7 +8,7 @@ export const setToken = newToken => {
     token = `Bearer ${newToken}`
 }
 
-export const create = ({content, important}, {token}) => {
+export const create = ({content, important}) => {
     const config = {
       headers: {
           Authorization: token
@@ -30,3 +30,5 @@ export const getAll = () => {
             return data;
         });
 };
+
+// TODO: método update

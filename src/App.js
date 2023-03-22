@@ -23,7 +23,17 @@ const App = (props) => {
         setNotes(notes);
         setLoading(false);
       })
-    }, []);
+  }, []);
+
+  useEffect(() =>  {
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteAppUser') 
+
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      noteService.setToken(user.token)
+    }
+  }, []); // array de dependencias vacío significa que sólo se va a ejecutar la primera vevz
   
   const handleChangeNote = (event) => {
     setNewNote(event.target.value);
@@ -50,8 +60,17 @@ const App = (props) => {
 
     // el problema de los await es que necesitan try/catch
     try {
-      const user = await login({ username, password})
+      const user = await login({ 
+        username,
+        password
+      })
+
+      window.localStorage.setItem(
+        'loggedNoteAppUser', JSON.stringify(user)
+      )
+
       noteService.setToken(user.token)
+      
       setUser(user)
       setUsername('')
       setPassword('')
@@ -100,7 +119,10 @@ const App = (props) => {
       </form>
   )
   
-  
+  const handleLogout = () => {
+    setUser(null)
+    noteService.setToken(user.token)
+  }
   
     return (
     <div>
@@ -115,6 +137,12 @@ const App = (props) => {
           : renderLoginForm()
       }
 
+      <div>
+        <button onClick={handleLogout}>
+          Cerrar sesión
+        </button>
+      </div>
+      
       <ul>
         {notes
           .map((note) => (
