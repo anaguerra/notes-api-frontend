@@ -1,7 +1,7 @@
 import './App.css';
 import { Note } from './Note';
 import { useEffect, useState } from 'react';
-import {create as createNote, getAll as getAllNotes} from './services/notes'; 
+import * as noteService from './services/notes'; 
 import login from './services/login'; 
 
 const App = (props) => {
@@ -18,7 +18,7 @@ const App = (props) => {
   useEffect(() =>  {
     setLoading(true);
     
-    getAllNotes().then((notes) => {
+    noteService.getAll().then((notes) => {
         console.log(notes);
         setNotes(notes);
         setLoading(false);
@@ -38,7 +38,7 @@ const App = (props) => {
 
     const {token} = user
     
-    createNote(noteObject, {token})
+    noteService.create(noteObject, {token})
       .then(newNote => {
         setNotes((prevNotes) => prevNotes.concat(newNote));
       }).catch(error => {
