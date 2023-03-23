@@ -121,7 +121,8 @@ const App = (props) => {
   
   const handleLogout = () => {
     setUser(null)
-    noteService.setToken(user.token)
+    noteService.setToken(null)
+    window.localStorage.removeItem('loggedNoteAppUser')
   }
   
     return (
@@ -132,7 +133,7 @@ const App = (props) => {
       {loading ? 'Cargando...' : ''}
 
       {
-        user 
+        user === null
           ? renderCreateNoteForm()
           : renderLoginForm()
       }
