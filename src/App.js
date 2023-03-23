@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import * as noteService from './services/notes'; 
 import login from './services/login'; 
 import LoginForm from './components/LoginForm';
-import Togglable from './components/Togglable';
+import CreateNoteForm from './components/CreateNoteForm';
 
 const App = (props) => {
   
@@ -85,18 +85,6 @@ const App = (props) => {
   }
 
 
-  const renderCreateNoteForm = () => (
-      <form onSubmit={handleAddNote}>
-        <input
-        placeholder='Escriba el texto de la nota'
-          type='text' 
-          onChange={handleChangeNote} 
-          value={newNote} 
-        />
-        <button>Crear nota</button>
-      </form>
-  )
-  
   const handleLogout = () => {
     setUser(null)
     noteService.setToken(null)
@@ -113,7 +101,11 @@ const App = (props) => {
 
       {
         user 
-          ? renderCreateNoteForm()
+          ? <CreateNoteForm 
+            handleAddNote={handleAddNote}
+            newNote={newNote}
+            handleChangeNote={handleChangeNote}
+          />
           : <LoginForm 
               username={username} 
               password={password} 
