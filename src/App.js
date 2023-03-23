@@ -9,7 +9,7 @@ import CreateNoteForm from './components/CreateNoteForm';
 const App = (props) => {
   
   const [notes, setNotes] = useState([]);
-  const [newNote, setNewNote] = useState('');
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [username, setUsername] = useState('');
@@ -37,24 +37,14 @@ const App = (props) => {
     }
   }, []); // array de dependencias vacío significa que sólo se va a ejecutar la primera vevz
   
-  const handleChangeNote = (event) => {
-    setNewNote(event.target.value);
-  }
-
-  const handleAddNote = (event) => {
-    event.preventDefault();
-    const noteObject = {
-      content: newNote,
-      important: Math.random() > 0.5
-    }
-
+  
+  const createNewNoteAndAddToList = (noteObject) => {
     noteService.create(noteObject)
       .then(newNote => {
         setNotes((prevNotes) => prevNotes.concat(newNote));
       }).catch(error => {
         setError(error);
       });
-      setNewNote('');
   }
 
   const handleLogin = async (event) => { // se podría hacer con promesas también
@@ -102,9 +92,7 @@ const App = (props) => {
       {
         user 
           ? <CreateNoteForm 
-            handleAddNote={handleAddNote}
-            newNote={newNote}
-            handleChangeNote={handleChangeNote}
+            createNewNoteAndAddToList={createNewNoteAndAddToList}
           />
           : <LoginForm 
               username={username} 
