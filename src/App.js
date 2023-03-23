@@ -3,6 +3,7 @@ import { Note } from './Note';
 import { useEffect, useState } from 'react';
 import * as noteService from './services/notes'; 
 import login from './services/login'; 
+import LoginForm from './components/LoginForm';
 
 const App = (props) => {
   
@@ -82,30 +83,6 @@ const App = (props) => {
     }
   }
 
-  const renderLoginForm = () => {
-    return(
-      <form onSubmit={handleLogin}>
-        <div>
-        <input 
-          type='text'
-          value={username}
-          name='Username'
-          placeholder='Username'
-          onChange={(event) => setUsername(event.target.value)}
-        />
-        </div>
-                
-        <input 
-          type='password'
-          value={password}
-          name='Password'
-          placeholder='Password'
-          onChange={(event) => setPassword(event.target.value)}
-        />
-        <button>Login</button>
-      </form>
-    )
-  }
 
   const renderCreateNoteForm = () => (
       <form onSubmit={handleAddNote}>
@@ -133,9 +110,19 @@ const App = (props) => {
       {loading ? 'Cargando...' : ''}
 
       {
-        user === null
+        user 
           ? renderCreateNoteForm()
-          : renderLoginForm()
+          : <LoginForm 
+              username={username} 
+              password={password} 
+              handleUsernameChange={
+                (event) => setUsername(event.target.value)
+              }
+              handlePasswordChange={
+                (event) => setPassword(event.target.value)
+              }
+              handleLogin={handleLogin}
+            />
       }
 
       <div>
