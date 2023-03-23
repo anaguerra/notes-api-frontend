@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Togglable from './Togglable';
 
 const CreateNoteForm = ({createNewNoteAndAddToList}) => {
   
@@ -21,7 +22,7 @@ const CreateNoteForm = ({createNewNoteAndAddToList}) => {
   }
 
   return (
-    <>
+    <Togglable buttonLabel='New note'>
       <h3>Create a new note</h3>
       
       <form onSubmit={handleAdd}>
@@ -33,7 +34,7 @@ const CreateNoteForm = ({createNewNoteAndAddToList}) => {
         />
         <button>Crear nota</button>
       </form>
-    </>
+    </Togglable>
 )}
 
 export default CreateNoteForm
