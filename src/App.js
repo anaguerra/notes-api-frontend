@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import * as noteService from './services/notes'; 
 import login from './services/login'; 
 import LoginForm from './components/LoginForm';
+import Togglable from './components/Togglable';
 
 const App = (props) => {
   
@@ -105,6 +106,7 @@ const App = (props) => {
     return (
     <div>
       <h1>Notes</h1>
+
       {error ? <span style={{color:'red'}}>{error}</span> : ''}
       
       {loading ? 'Cargando...' : ''}
