@@ -21,7 +21,6 @@ const App = (props) => {
     setLoading(true);
     
     noteService.getAll().then((notes) => {
-        console.log(notes);
         setNotes(notes);
         setLoading(false);
       })
