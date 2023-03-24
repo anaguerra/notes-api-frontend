@@ -1,11 +1,11 @@
 import React from 'react'
 import Togglable from './Togglable'
+import PropTypes from 'prop-types'
 
-// const LoginForm = ({handleLogin, handleUsernameChange, handlePasswordChange}) => {
-const LoginForm = (props) => {
+const LoginForm = ({handleLogin, ...props}) => {
   return (
     <Togglable buttonLabel='Show loginn'>
-      <form onSubmit={props.handleLogin}>
+      <form onSubmit={handleLogin}>
         <div>
         <input 
           type='text'
@@ -27,6 +27,14 @@ const LoginForm = (props) => {
       </form>
     </Togglable>
   )
+}
+
+LoginForm.propTypes = {
+  handleLogin: PropTypes.func.isRequired,
+  username: PropTypes.string,
+  password: PropTypes.string,
+  handleUsernameChange: PropTypes.func.isRequired,
+  handlePasswordChange: PropTypes.func.isRequired
 }
 
 export default LoginForm
