@@ -114,9 +114,17 @@ const App = (props) => {
 
       {
         user 
-          ? <CreateNoteForm 
-            createNewNoteAndAddToList={createNewNoteAndAddToList}
-          />
+          ? <>
+              <CreateNoteForm 
+              createNewNoteAndAddToList={createNewNoteAndAddToList}
+              />
+            
+              <div>
+                <button onClick={handleLogout}>
+                  Cerrar sesión
+                </button>
+              </div>
+            </>
           : <LoginForm 
               username={username} 
               password={password} 
@@ -130,11 +138,7 @@ const App = (props) => {
             />
       }
 
-      <div>
-        <button onClick={handleLogout}>
-          Cerrar sesión
-        </button>
-      </div>
+
 
       <div>
         <button onClick={() => setShowAll(!showAll)}>
