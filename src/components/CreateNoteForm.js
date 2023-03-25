@@ -30,6 +30,7 @@ const CreateNoteForm = ({createNewNoteAndAddToList}) => {
       <form onSubmit={handleAdd}>
         <input
         placeholder='Escriba el texto de la nota'
+          name='noteContent' 
           type='text' 
           onChange={handleChange} 
           value={newNote} 
