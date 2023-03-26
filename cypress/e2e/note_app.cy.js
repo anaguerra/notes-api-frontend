@@ -59,15 +59,7 @@ describe('Note App', () => {
 
   describe('when logged in', () => {
     beforeEach(() => {
-      cy.request('POST', 'http://localhost:3001/api/login', {
-        username: 'anaroot',
-        password: '12345'
-      }).then(response => {
-        localStorage.setItem(
-          'loggedNoteAppUser', JSON.stringify(response.body)
-        )
-        cy.visit('http://localhost:3000')
-      })
+      cy.login({username:'anaroot', password:'12345'})
     })
 
     it('a new note can be created', () => {
