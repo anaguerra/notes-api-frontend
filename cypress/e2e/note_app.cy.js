@@ -69,6 +69,33 @@ describe('Note App', () => {
       cy.contains('Crear nota').click()
       cy.contains(noteContent)
     })
-  })
 
+    describe('and a note exists', () => {
+      beforeEach(() => {
+        cy.createNote({ 
+          content: 'A note created 1 from cypress', 
+          important: false
+        })
+
+        cy.createNote({ 
+          content: 'A note created 2 from cypress', 
+          important: false
+        })
+      })
+
+      it('it can be changed as important', () => {
+        cy
+        .contains('A note created 2 from cypress').as('myNote')
+        
+        // cy.debug()
+
+        cy.get('@myNote')
+        .contains('make important')
+        .click()
+
+        cy.get('@myNote')
+        .contains('make not important')
+      })
+    })
+  })
 })
