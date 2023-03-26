@@ -2,6 +2,15 @@ describe('Note App', () => {
 
   beforeEach(() => {
     cy.visit('http://localhost:3000')
+
+    // empty database and create new user
+    cy.request('POST', 'http://localhost:3001/api/testing/reset')
+    const user = {
+      name: 'Ana',
+      username: 'anaroot',
+      password: '12345'
+    }
+    cy.request('POST', 'http://localhost:3001/api/users', user)
   })
 
   it('frontpage can be opened', () => {
@@ -28,6 +37,15 @@ describe('Note App', () => {
     cy.get('[name="Password"]').type('12345')
     cy.contains('Login').click()
     cy.contains('New note')
+  })
+  
+
+  it('login fails with wrong password', () => {
+    cy.contains('Show loginn').click()
+    cy.get('[name="Username"]').type('anaroot')
+    cy.get('[name="Password"]').type('wrong_password')
+    cy.contains('Login').click()
+    cy.contains('Login error')
   })
 
 
