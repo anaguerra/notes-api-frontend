@@ -4,13 +4,14 @@ import login from './services/login';
 import LoginForm from './components/LoginForm';
 import CreateNoteForm from './components/CreateNoteForm';
 import Note from './components/Note';
+import Notification from './components/Notification';
 
 const App = (props) => {
   
   const [notes, setNotes] = useState([]);
   
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState('');
@@ -108,7 +109,7 @@ const App = (props) => {
     <div>
       <h1>Notes</h1>
 
-      {error ? <span style={{color:'red'}}>{error}</span> : ''}
+      <Notification message={error} />
       
       {loading ? 'Cargando...' : ''}
 

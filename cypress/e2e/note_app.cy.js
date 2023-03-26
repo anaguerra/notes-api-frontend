@@ -45,16 +45,29 @@ describe('Note App', () => {
     cy.get('[name="Username"]').type('anaroot')
     cy.get('[name="Password"]').type('wrong_password')
     cy.contains('Login').click()
+    
+    // maneras diferentes de comprobar
     cy.contains('Login error')
+    cy.get('.error').contains('Login error') 
+    // más explícito (no recomendable testar css salvo que sea algo crítico)
+    cy.get('.error')
+      .should('contain', 'Login error')  
+      .should('have.css', 'color', 'rgb(255, 0, 0)')
+      .should('have.css', 'border-style', 'solid')
   })
 
 
   describe('when logged in', () => {
     beforeEach(() => {
-      cy.contains('Show loginn').click()
-      cy.get('[name="Username"]').type('anaroot')
-      cy.get('[name="Password"]').type('12345')
-      cy.contains('Login').click()
+      cy.request('POST', 'http://localhost:3001/api/login', {
+        username: 'anaroot',
+        password: '12345'
+      }).then(response => {
+        localStorage.setItem(
+          'loggedNoteAppUser', JSON.stringify(response.body)
+        )
+        cy.visit('http://localhost:3000')
+      })
     })
 
     it('a new note can be created', () => {
